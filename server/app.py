@@ -64,10 +64,37 @@ class SignUp(Resource):
             "first_name": new_user.first_name,
             "access_token": access_token
         })
+        
+class UserLogIn(Resource):
+    def post(self):
+        data=request.get_json()
+        print (data)
+        
+        email = data.get("email")
+        password = str(data.get("password"))
+        
+        user = User.query.filter_by(email=email).first()
+        
+        if user is None:
+            return jsonify({"error" : "Unauthorized!"}), 401
+        
+        if not bcrypt.check_password_hash(user.password, password):
+            return jsonify({'error' : 'Unauthorized! Incorrect password'}), 401
+        
+        access_token = create_access_token(identity=email)
+        user.access_token = access_token
+        
+        return jsonify({
+            "id":user.id,
+            "email":user.email,
+            "access_token":user.access_token,
+        })
+            
 
 # Add resources to API
 api.add_resource(Home, '/')
 api.add_resource(SignUp, '/user/signup')
+api.add_resource(UserLogIn, "/user/login")
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)

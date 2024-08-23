@@ -12,3 +12,8 @@
     background-size: cover;
     background-repeat: no-repeat;
 }
+.Home_page_image{
+    background-image: url("/public/home_pic.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}

@@ -4,11 +4,11 @@ import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { IoIosEyeOff } from "react-icons/io";
 import {Link} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [visiblePassword, setVisiblePassword]= useState(false)
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
     password: ""
   });
@@ -20,6 +20,7 @@ const Login = () => {
       [name]: value // Use computed property name to update the specific field
     });
   };
+  const navigate= useNavigate()
 
   const togglePasswordVisibility = ()=>{
     setVisiblePassword (!visiblePassword)
@@ -27,6 +28,32 @@ const Login = () => {
 
   const handleSubmit = (e)=>{
     e.preventDefault()
+
+    const opts={
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify(formData)
+    }
+
+fetch('http://127.0.0.1:5555/user/login',opts)
+.then((response)=>{
+  if (response.ok){
+    return response.json()
+  }
+  else{
+    throw new Error("Failed to login.Please try again!")
+  }
+})
+
+.then((data)=>{
+  console.log (data)
+  sessionStorage.setItem("token", data.access_token)
+  sessionStorage.setItem("userId", data.id)
+  navigate("/")
+})
+
   }
 
   return (

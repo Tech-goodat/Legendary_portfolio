@@ -7,13 +7,17 @@ import Testimonials from './Testimonials'
 import Contact from './Contact'
 import Login from './Login'
 import SignUp from './SignUp'
+import Navbar from './Navbar'
 
 
 
 const App = () => {
   return (
     <Router>
-      <div className='bg-[#f0f9ff] w-full h-screen'>
+      <div className='overflow-y-auto'>
+        <Navbar />
+      </div>
+      <div className='bg-[#f0f9ff] w-full h-screen mt-7'>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<AboutMe />} />
