@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.loginImage{
+    background-image: url("/public/tom.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.SignUpImage{
+    background-image: url("/public/funnyJerry.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
